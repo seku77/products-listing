@@ -10,13 +10,18 @@
       <div class="row badges">
         <div
           class="badge"
-          v-for="(value, name, index) of product.badges"
+          v-for="[badge, index] in badgesList(product.badges)"
           :key="index"
-        >
-          <label v-if="value === true">{{ name }}</label>
-        </div>
+          :class="badge"
+        ></div>
       </div>
       <div class="price">${{ product.price.current }}</div>
+      <div
+        class="regularPrice"
+        v-if="product.price.regular !== product.price.current"
+      >
+        ${{ product.price.regular }}
+      </div>
       <div class="rating">Rating: {{ product.rating }}</div>
       <div class="addToCart">Add to cart</div>
     </div>
@@ -28,6 +33,11 @@ export default {
   props: {
     product: {
       type: Object,
+    },
+  },
+  methods: {
+    badgesList(badges) {
+      return Object.entries(badges).filter((badge) => badge[1] === true);
     },
   },
 };
@@ -59,6 +69,31 @@ export default {
   padding: 8px;
   .price {
     font-weight: 600;
+  }
+  .regularPrice {
+    text-decoration: line-through;
+  }
+  .row {
+    width: 100%;
+  }
+  .badges {
+    display: flex;
+    gap: 8px;
+  }
+  .badge {
+    height: 24px;
+    width: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    &.new {
+      background-image: url("../assets/icons/new.svg");
+    }
+    &.collectionSale {
+      background-image: url("../assets/icons/tag.svg");
+    }
+    &.lastItems {
+      background-image: url("../assets/icons/cart-exclamation.svg");
+    }
   }
 }
 </style>
