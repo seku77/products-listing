@@ -9,14 +9,7 @@
         <div class="detailsLeft">
           <div class="row">In stock: {{ product.amount }}</div>
           <div v-if="product.addedToWishlist" class="row">On wish list</div>
-          <div class="row badges">
-            <div
-              class="badge"
-              v-for="[badge, index] in badgesList(product.badges)"
-              :key="index"
-              :class="badge"
-            ></div>
-          </div>
+          <ProductBadges :badges="badgesList(product.badges)" />
         </div>
         <div class="detailsRight">
           <div
@@ -30,20 +23,20 @@
       </div>
     </div>
     <div class="bottom">
-      <div class="badges">
-        <div
-          class="badge ratingStar"
-          v-for="n in product.rating"
-          :key="n"
-        ></div>
-      </div>
+      <Rating :rating="product.rating" />
       <div class="addToCart">Add to cart</div>
     </div>
   </div>
 </template>
 <script>
+import Rating from "./RatingComponent.vue";
+import ProductBadges from "./ProductBadges.vue";
 export default {
   name: "ProductCard",
+  components: {
+    Rating,
+    ProductBadges,
+  },
   props: {
     product: {
       type: Object,
@@ -113,28 +106,6 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: row;
-  }
-}
-.badges {
-  display: flex;
-  gap: 8px;
-}
-.badge {
-  height: 24px;
-  width: 24px;
-  background-repeat: no-repeat;
-  background-position: center;
-  &.new {
-    background-image: url("../assets/icons/new.svg");
-  }
-  &.collectionSale {
-    background-image: url("../assets/icons/tag.svg");
-  }
-  &.lastItems {
-    background-image: url("../assets/icons/cart-exclamation.svg");
-  }
-  &.ratingStar {
-    background-image: url("../assets/icons/star.svg");
   }
 }
 </style>
