@@ -1,7 +1,7 @@
 <template>
   <div class="productsList">
     <div class="productOfADay">
-      <h1>ProductOfADay</h1>
+      <h1>Product Of A Day</h1>
       <ProductCard
         v-if="products.productOfADay"
         :product="products.productOfADay"
